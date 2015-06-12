@@ -1,4 +1,4 @@
-function sscsvwriter(config) {
+function CSVWriter(config) {
 
     /*Config*/
     config = config || {};

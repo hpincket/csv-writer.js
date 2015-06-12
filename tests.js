@@ -38,7 +38,7 @@ QUnit.test( "hello test", function( assert ) {
 });
 
 QUnit.test( "wiki test basic", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -47,7 +47,7 @@ QUnit.test( "wiki test basic", function( assert ) {
 });
 
 QUnit.test( "wiki test quoted", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)},
@@ -57,7 +57,7 @@ QUnit.test( "wiki test quoted", function( assert ) {
 });
 
 QUnit.test( "wiki test escape quotes", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)},
@@ -67,7 +67,7 @@ QUnit.test( "wiki test escape quotes", function( assert ) {
 });
 
 QUnit.test( "wiki test embedded linebreaks", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)},
@@ -77,7 +77,7 @@ QUnit.test( "wiki test embedded linebreaks", function( assert ) {
 });
 
 QUnit.test( "wiki test leading spaces", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)},
@@ -89,7 +89,7 @@ QUnit.test( "wiki test leading spaces", function( assert ) {
 
 QUnit.test( "wiki test spaces with quotes", function( assert ) {
     //Should not be any spaces around quoted fields
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)},
@@ -100,7 +100,7 @@ QUnit.test( "wiki test spaces with quotes", function( assert ) {
 
 QUnit.test( "wiki test example", function( assert ) {
     //Should not be any spaces around quoted fields
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)},
@@ -116,7 +116,7 @@ QUnit.test( "wiki test example", function( assert ) {
 
 QUnit.module("Oracle Papa Parse");
 QUnit.test( "simple", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -127,7 +127,7 @@ QUnit.test( "simple", function( assert ) {
 });
 
 QUnit.test( "singleline 3cols", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -141,7 +141,7 @@ QUnit.test( "singleline 3cols", function( assert ) {
 });
 
 QUnit.test( "singleline 100cols", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [];
     content = [[]];
     for(var i=0;i<100;i++) {
@@ -156,7 +156,7 @@ QUnit.test( "singleline 100cols", function( assert ) {
 });
 
 QUnit.test( "1000s of lines 100cols", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [];
     content = [[]];
     numOfLines = g.random(1000,9999);
@@ -177,7 +177,7 @@ QUnit.test( "1000s of lines 100cols", function( assert ) {
 });
 
 QUnit.test( "Specific case 1", function( assert) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)}];
     content = [["\r '\f'' \f\t", "\n\f \r'\" "]];
@@ -186,7 +186,7 @@ QUnit.test( "Specific case 1", function( assert) {
 });
 
 QUnit.test( "Specific case 2", function( assert) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)}];
     content = [[" '\t\t \t\t\b\\'\\\b\\'\t \r\\\\'\t\b \\\t ", "\f\t\"\r\b\b \r\\\r\b\"'\"\r \n\f \b\r\n \b\n\f\b'\t\t\b\"\\\\\"\r"]];
@@ -197,7 +197,7 @@ QUnit.test( "Specific case 2", function( assert) {
 
 
 QUnit.test( "Dangerous 100s of lines 100cols", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [];
     content = [[]];
     numOfLines = g.random(100,999);
@@ -218,7 +218,7 @@ QUnit.test( "Dangerous 100s of lines 100cols", function( assert ) {
 });
 
 QUnit.test( "Dangerous and Alphabetical 100s of lines 100cols", function( assert ) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [];
     content = [[]];
     numOfLines = g.random(100,999);
@@ -241,20 +241,20 @@ QUnit.test( "Dangerous and Alphabetical 100s of lines 100cols", function( assert
 
 QUnit.module("Config");
 QUnit.test( "header config true", function( assert) {
-    ss1 = new sscsvwriter({'header':true});
+    ss1 = new CSVWriter({'header':true});
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
     content = [['1997', 'Ford', 'E350']];
     assert.notEqual(ss1.toCSV(map, content).data, '1997,Ford,E350');
 
-    ss2 = new sscsvwriter({'header':true});
+    ss2 = new CSVWriter({'header':true});
     content = [['1997', 'Ford', 'E350']];
     assert.equal(ss2.toCSV(map, content).data, 'first,second,third\n1997,Ford,E350');
 });
 
 QUnit.test( "header config false", function( assert) {
-    ss3 = new sscsvwriter({'header':false});
+    ss3 = new CSVWriter({'header':false});
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -263,7 +263,7 @@ QUnit.test( "header config false", function( assert) {
 });
 
 QUnit.test( "newline config \\n", function( assert) {
-    ss1 = new sscsvwriter({'newline':'\n'});
+    ss1 = new CSVWriter({'newline':'\n'});
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -272,7 +272,7 @@ QUnit.test( "newline config \\n", function( assert) {
 });
 
 QUnit.test( "newline config \\r", function( assert) {
-    ss1 = new sscsvwriter({'newline':'\r'});
+    ss1 = new CSVWriter({'newline':'\r'});
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -281,7 +281,7 @@ QUnit.test( "newline config \\r", function( assert) {
 });
 
 QUnit.test( "newline config \\r\\n", function( assert) {
-    ss1 = new sscsvwriter({'newline':'\r\n'});
+    ss1 = new CSVWriter({'newline':'\r\n'});
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -290,7 +290,7 @@ QUnit.test( "newline config \\r\\n", function( assert) {
 });
 
 QUnit.test( "newline config \\n\\r (not valid)", function( assert) {
-    ss1 = new sscsvwriter({'newline':'\n\r'});
+    ss1 = new CSVWriter({'newline':'\n\r'});
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -299,7 +299,7 @@ QUnit.test( "newline config \\n\\r (not valid)", function( assert) {
 });
 
 QUnit.test( "newline config abc", function( assert) {
-    ss1 = new sscsvwriter({'newline':'abc'});
+    ss1 = new CSVWriter({'newline':'abc'});
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1)},
         {'third': g.getIndex(2)}];
@@ -309,7 +309,7 @@ QUnit.test( "newline config abc", function( assert) {
 
 QUnit.module("Error Cases");
 QUnit.test( "Invalid Map Error", function( assert) {
-    ss = new sscsvwriter();
+    ss = new CSVWriter();
     map = [{'first': g.getIndex(0)},
         {'second': g.getIndex(1), 'illegal': g.getIndex(0)},
         {'third': g.getIndex(2)}];
