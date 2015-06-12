@@ -20,7 +20,7 @@ writer = CSVWriter(config);
 
 Convert an array of objects to a csv string with `toCSV(map, content)`.
 Where map defines the rules for generating fields, and content is your array.
-You can think of the resulting CSV as the cartesian product of map (columns) and content (rows).
+You can think of the resulting CSV as the Cartesian product of `map` (columns) and `content` (rows).
 This guarantees that each row has an equal number of columns.
 
 ###Map Format
@@ -56,6 +56,7 @@ csvfilecontents = res.data;
 }
 ```
 header: true or false
+
 newline: '\n', '\r\n', '\r'
 
 (more planned)
@@ -72,7 +73,8 @@ Let me know if you desire some sort of functionality.
 ##Testing
 
 So have you tested this? Hell yes!
-csv-writer.js is aggressively tested against papa-paser.js and with hellish data. 
+csv-writer.js is aggressively tested against papa-paser.js and with hellish data.
+Got tabs? quotes? newlines? line feeds? even backspaces? No problem.
 Check out our testing oracles if you're curious.
 
 ##Alternatives
