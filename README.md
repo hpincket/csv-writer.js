@@ -2,7 +2,7 @@
 ### Super Simple CSV Writer for Javascript
 
 A smack-you-in-the-face simple library for generating RFC 4180 compliant CSV files
-from javascript objects.
+from javascript objects. It's the interface I can't believe didn't already exist.
 
 ##Usage
 
@@ -14,7 +14,6 @@ Just include
 
 Then create a CSVWriter object. Optionally include a configuration object.
 ```javascript
-config = {'header': true };
 writer = CSVWriter(config);
 ```
 
@@ -23,10 +22,24 @@ Where map defines the rules for generating fields, and content is your array.
 You can think of the resulting CSV as the Cartesian product of `map` (columns) and `content` (rows).
 This guarantees that each row has an equal number of columns.
 
-###Map Format
-
-A map is an array of fieldname and function pairings.
+A map is either an array of functions or of fieldname and function pairings.
 The function takes an element in the content array.
+
+```javascript
+map = [getName, getAddress, getFilm];
+var res = writer.toCSV(map, list_of_disney_princesses);
+```
+
+Or to include headers:
+
+```
+map = [
+    {'Name': getName },
+    {'Castle': getAddress },
+    {'Film': getFilm }];
+
+var res = writer.toCSV(map, list_of_disney_princesses);
+```
 
 ###Example
 
@@ -37,7 +50,7 @@ var getFilm = function(princess) {...};
 map = [
     {'Name': getName },
     {'Castle': getAddress },
-    {'Film': getFilm }]
+    {'Film': getFilm }];
 
 var res = writer.toCSV(map, list_of_disney_princesses);
 
@@ -48,6 +61,11 @@ if(res.error) {
 csvfilecontents = res.data;
 ```
 
+If you don't care about column headers, just pass in a list of functions:
+
+
+The config.header option will only have an effect if the map includes { header: f()} pairings.
+
 ##Config
 ```javascript
 {
@@ -55,7 +73,8 @@ csvfilecontents = res.data;
     'newline': '\n'
 }
 ```
-header: true or false
+header: true or false. Only applies if the map includes headers (see above).
+Setting to false overrides the default of true in that case.
 
 newline: '\n', '\r\n', '\r'
 

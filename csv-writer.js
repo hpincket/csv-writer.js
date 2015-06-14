@@ -3,7 +3,10 @@ function CSVWriter(config) {
     /*Config*/
     config = config || {};
     var newline = config.newline;
-    var header = config.header;
+    var header = true;
+    if(typeof(config.header) !== "undefined")
+        header = config.header;
+
     if(newline != '\n' && newline != '\r' && newline != '\r\n') 
         newline = '\n'; //Default
 
@@ -50,29 +53,38 @@ function CSVWriter(config) {
     this.toCSV = function(map, content) {
         var resultantString = "";
         var i; 
-        //Check for map error
-        for(i =0; i< map.length; i++) {
-            if(Object.keys(map[i]).length !== 1)
-                return makeInvalidMapError(i);
-            // Just check ahead of time, that way we don't have to check in two places
-            // I don't know how much of a performance hit this gives
-        }
-        
-        // Header
-        if(header) {
-            var tempHeaderRowData = [];
-            for (i = 0; i < map.length; i++) {
-                tempHeaderRowData.push(Object.keys(map[i])[0]); //Man this is ugly
+        var functionList = [];
+
+        // If function then no headers
+        if(typeof(map[0]) === "function") {
+            functionList = map;
+        } else {
+            //Check for map error
+            for(i =0; i< map.length; i++) {
+                if(Object.keys(map[i]).length !== 1)
+                    return makeInvalidMapError(i);
+                functionList.push(map[i][Object.keys(map[i])[0]]);
+                // Just check ahead of time, that way we don't have to check in two places
+                // I don't know how much of a performance hit this gives
             }
-            resultantString += makeCSVRow(tempHeaderRowData);
+            // Header
+            if(header) {
+                var tempHeaderRowData = [];
+                for (i = 0; i < map.length; i++) {
+                    tempHeaderRowData.push(Object.keys(map[i])[0]); //Man this is ugly
+                }
+                resultantString += makeCSVRow(tempHeaderRowData);
+            }
         }
+
         //For each row (or for each element in content)
         for (i = 0; i < content.length; i++) {
             var rowElement = content[i];
             var rowData = [];
             //For each column (or for each f() in map)
             for(var k = 0; k < map.length; k++) {
-                temp = map[k][Object.keys(map[k])[0]](rowElement);
+                //temp = functionList[k][Object.keys(map[k])[0]](rowElement);
+                temp = functionList[k](rowElement);
                 if(typeof temp === "undefined")
                     return makeUndefinedMapError(k, i, resultantString);
                 if(temp === null)
