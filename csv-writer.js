@@ -39,11 +39,11 @@ function CSVWriter(config) {
     }
     // Map function returned undefined
     function makeUndefinedMapError(mapIndex, rowIndex, data) {
-        return {data: data, error: "Error: Mapping produced 'undefined' at row "+rowIndex+" col "+colIndex + "."};
+        return {data: data, error: "Error: Mapping produced 'undefined' at row "+rowIndex+" col "+mapIndex + "."};
     }
     // Map function returned null
     function makeNullMapError(mapIndex, rowIndex, data) {
-        return {data: data, error: "Error: Mapping produced 'null' at row "+rowIndex+" col "+colIndex + "."};
+        return {data: data, error: "Error: Mapping produced 'null' at row "+rowIndex+" col "+ mapIndex + "."};
     }
 
 

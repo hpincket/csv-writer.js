@@ -14,7 +14,7 @@ Just include
 
 Then create a CSVWriter object. Optionally include a configuration object.
 ```javascript
-writer = CSVWriter(config);
+writer = new CSVWriter(config);
 ```
 
 Convert an array of objects to a csv string with `toCSV(map, content)`.
